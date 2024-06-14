@@ -1,8 +1,10 @@
 package com.example.back.service
 
 import com.example.back.entity.Scene
+import com.example.back.entity.SceneView
 import com.example.back.repository.FilmRepository
 import com.example.back.repository.SceneRepository
+import com.example.back.repository.SceneViewRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -17,16 +19,24 @@ class SceneService {
     @Autowired
     lateinit var sceneRepository: SceneRepository
 
+
+    @Autowired
+    lateinit var sceneViewRepository: SceneViewRepository
     fun list(): List<Scene> {
         return sceneRepository.findAll()
     }
 
+
+    fun listScenesWithFilm(): List<SceneView> {
+        return sceneViewRepository.findAll()
+    }
+
     fun save(scene: Scene): Scene {
         try {
-            val film = filmRepository.findById(scene.film?.id!!).orElseThrow {
+            val film = filmRepository.findById(scene.filmId).orElseThrow {
                 Exception("Film not found")
             }
-            val totalMinutes = sceneRepository.sumMinutesByFilmId(scene.film?.id!!) ?: 0
+            val totalMinutes = sceneRepository.sumMinutesByFilmId(scene.filmId) ?: 0
             if (totalMinutes + scene.duration > film.duration) {
                 throw Exception("Exceeds film duration limit")
             }

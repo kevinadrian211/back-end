@@ -1,6 +1,8 @@
 package com.example.back.service
 
+import com.example.back.entity.CharacterView
 import com.example.back.entity.MovieCharacter
+import com.example.back.repository.CharacterViewRepository
 import com.example.back.repository.MovieCharacterRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -11,7 +13,15 @@ import org.springframework.web.server.ResponseStatusException
 class MovieCharacterService {
 
     @Autowired
+    private lateinit var characterViewRepository: CharacterViewRepository
+
+    @Autowired
     private lateinit var movieCharacterRepository: MovieCharacterRepository
+
+
+    fun getAllCharacters(): List<CharacterView> {
+        return characterViewRepository.findAll()
+    }
 
     fun list(): List<MovieCharacter> {
         return movieCharacterRepository.findAll()

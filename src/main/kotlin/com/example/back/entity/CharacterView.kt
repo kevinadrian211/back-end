@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "view_character")
-class ViewCharacter {
+class CharacterView {
     @Id
     @Column(name = "character_id")
     var characterId: Long? = null

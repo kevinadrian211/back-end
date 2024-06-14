@@ -1,5 +1,6 @@
 package com.example.back.controller
 
+import com.example.back.entity.CharacterView
 import com.example.back.entity.MovieCharacter
 import com.example.back.service.MovieCharacterService
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,10 +10,16 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/character")
+@CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
 class MovieCharacterController {
 
     @Autowired
     lateinit var movieCharacterService: MovieCharacterService
+
+    @GetMapping("/with-scene")
+    fun getAllCharacters(): List<CharacterView> {
+        return movieCharacterService.getAllCharacters()
+    }
 
     @GetMapping
     fun list(): List<MovieCharacter> {

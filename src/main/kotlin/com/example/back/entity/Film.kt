@@ -21,7 +21,4 @@ class Film {
 
     @Column(nullable = false)
     var duration: Int = 0
-
-    @OneToMany(mappedBy = "film", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var scenes: MutableList<Scene> = mutableListOf()
 }

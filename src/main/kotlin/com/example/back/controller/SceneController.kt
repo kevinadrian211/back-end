@@ -1,6 +1,7 @@
 package com.example.back.controller
 
 import com.example.back.entity.Scene
+import com.example.back.entity.SceneView
 import com.example.back.service.SceneService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -9,10 +10,16 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/scene")
+@CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
 class SceneController {
 
     @Autowired
     lateinit var sceneService: SceneService
+
+    @GetMapping("/with-film")
+    fun listScenesWithFilm(): List<SceneView> {
+        return sceneService.listScenesWithFilm()
+    }
 
     @GetMapping
     fun list(): List<Scene> {

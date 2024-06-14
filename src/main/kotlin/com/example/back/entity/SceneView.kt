@@ -7,7 +7,7 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "view_scene")
-class ViewScene(
+class SceneView(
     @Id
     @Column(name = "scene_id", updatable = false)
     val id: Long,

@@ -19,7 +19,5 @@ data class Scene(
     @Column(nullable = false)
     var duration: Int,
 
-    @ManyToOne
-    @JoinColumn(name = "film_id", nullable = false)
-    var film: Film
+    var filmId: Long
 )

@@ -8,25 +8,35 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/film")
+@RequestMapping("/films") // Cambiado a "/films" para reflejar mejor la entidad manejada
+@CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
 class FilmController {
 
     @Autowired
     lateinit var filmService: FilmService
 
     @GetMapping
-    fun list(): List<Film> {
-        return filmService.list()
+    fun list(): ResponseEntity<List<Film>> {
+        val films = filmService.list()
+        return ResponseEntity.ok(films)
+    }
+
+    @GetMapping("/{id}")
+    fun findById(@PathVariable id: Long): ResponseEntity<Film> {
+        val film = filmService.findAll(id)
+        return ResponseEntity.ok(film)
     }
 
     @PostMapping
-    fun save(@RequestBody film: Film): Film {
-        return filmService.save(film)
+    fun save(@RequestBody film: Film): ResponseEntity<Film> {
+        val savedFilm = filmService.save(film)
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedFilm)
     }
 
     @PutMapping
     fun update(@RequestBody film: Film): ResponseEntity<Film> {
-        return ResponseEntity(filmService.update(film), HttpStatus.OK)
+        val updatedFilm = filmService.update(film)
+        return ResponseEntity.ok(updatedFilm)
     }
 
     @DeleteMapping("/{id}")
